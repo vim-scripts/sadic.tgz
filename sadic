@@ -1,0 +1,45 @@
+#! /bin/sh
+
+#$Id: sadic,v 1.5 2005/05/20 14:46:56 zrelli Exp $
+
+#Usage : sadic [-j]
+#the -j flag tells sadic that the text to be traslated is english
+#and the desired result is japanese.
+
+cat prefix/post1 > .post.pl
+
+
+while read line
+do
+    echo $line | sed 's:":\\":g' | sed 's:@:\\@:g' >> .post.pl
+done
+
+
+
+if [ $# -ne 0 ]
+then
+    if [ "$1" = "-j" ]
+    then 
+         cat prefix/post2-ENJA >> .post.pl
+    else
+          cat prefix/post2-JAEN >> .post.pl
+    fi
+else
+     cat prefix/post2-JAEN >> .post.pl
+
+fi
+
+perl .post.pl | nkf -e > .res
+begin=`cat .res | grep -n "xxx" | grep hidden | grep after | cut -d":" -f1`
+begin=`expr $begin + 1`
+#echo begin : $begin
+tail +$begin .res > .tail
+end=`cat .tail | grep -n xxx | cut -d":" -f1`
+end=`expr $end - 1`
+#echo end : $end
+cat .tail | head -$end | nkf -e | sed 's:&gt;:>:g' |  sed 's:&lt;:<:g'
+
+#cleanup
+rm .tail
+rm .res
+rm .post.pl

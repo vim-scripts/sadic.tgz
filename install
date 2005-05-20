@@ -1,0 +1,14 @@
+# !/bin/sh
+
+prefix=$HOME
+
+if ! [ -d $prefix/bin ]
+then
+    mkdir $prefix/bin
+fi
+
+sed s:prefix:$prefix/bin:g sadic > .sadic
+
+mv .sadic $prefix/bin/sadic
+chmod +x $prefix/bin/sadic
+cp post* $prefix/bin/

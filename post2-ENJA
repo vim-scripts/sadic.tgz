@@ -1,0 +1,2 @@
+               xxx", wb_lp => 'ENJA',submit=>'Translate'];
+print $ua->request($req)->as_string;

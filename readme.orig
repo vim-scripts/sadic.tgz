@@ -1,0 +1,133 @@
+
+
+            Japanese to  English and English to Japanese translator
+                                  Saber Zrelli
+                               zrelli@jaist.ac.jp
+
+
+               $Id: readme,v 1.4 2005/05/20 12:12:24 zrelli Exp $
+
+
+
+
+Licence :
+---------
+
+This software is under GNU license. You are free to use it and modify it.
+any commercial use is not allowed.
+
+
+About : 
+------- 
+
+This is a handy utility to translate Japanese text into English one
+and also from English to Japanese. It uses the excite.co.jp services
+to translate the text then display the result in the standard
+output.
+
+The sadic utility reads the text to be translated from stdin. The
+default behavior is to translate from Japanese to English but if
+you use the  -j option , sadic will translate from English to
+Japanese.
+
+
+Requirements :
+--------------
+
+You need to have perl with the perl module " HTTP::Request::Common" installed , a Japanese environment the nkf utility  an
+Internet connection.
+
+Installation :
+--------------
+
+1- Edit the file "install" and change the variable "prefix" the default
+installation path is your home directory $HOME/bin
+
+2- Run the installation script $./install
+
+
+Usage :
+-------
+
+- options :
+
+  If you specify the -j option, sadic will translate the input from
+  English to Japanese, if you dont specify the -j option, sadic
+  will translate from Japanese to English.
+
+- from a file : you can use redirections to make sadic read the
+  text that you want to translate from a specific file.
+
+$sadic [-j] < file 
+
+where file contains the Japanese text that you want to translate.
+
+- interactive : In this mode , sadic read the text to be translated
+  from stdin and the result is displayed in stdout.
+
+type
+
+$sadic [-j] 
+
+then enter your Japanese text using the keyboard. when you finish
+press CTRL-D
+
+after 2 seconds the text that you types is translated.
+
+
+Integrating sadic into vim and mutt :
+-------------------------------------
+
+1 ) Mutt :
+----------
+
+If you add the following lines into your ~/.muttrc 
+
+macro pager   j          "v\n| nkf -e | sadic -j | less \nq<left>"
+macro pager   e         "v\n| nkf -e | sadic  | less \nq<left>"
+
+Then , while seeing your e-mails , you can press "j" to translate from english
+to japanese. and "e" to translate from japanese to english.
+
+
+2 ) Vim :
+---------
+
+If you add the following lines into your ~/.vimrc 
+
+vmap j :w! /tmp/.vim.msg.en<cr>:!sadic -j  < /tmp/.vim.msg.en<cr>
+vmap ,j :w! /tmp/.vim.msg.en<cr><esc>`>o<cr><esc>:r !sadic -j < /tmp/.vim.msg.en<cr>
+vmap e :w! /tmp/.vim.msg.jp<cr>:!sadic < /tmp/.msg.jp<cr>
+vmap ,e :w! /tmp/.vim.msg.jp<cr><esc>`>o<cr><esc>:r !sadic < /tmp/.vim.msg.jp<cr>
+
+then you can visually select a region of text by pressing Shift-V and then
+moving the cursor. 
+
+when you press "j" the text will be translated from english to japnese and then
+you will be back to vim.
+
+",j" translated the text from english to Japanese then appends the result after
+the visually selection region.
+
+the "e" and ",e" mappings doe the same except that they translate text from
+japanese to English.
+
+
+
+
+Important  Note :
+-----------------
+
+The tool was testd on a Japanese environment as follows :
+
+Terminal : puttyjp (winxp) with euc-jp as encoding
+Shell    : Bash , with LC_CTYPE=ja_JP.eucJP
+Remote OS : The sadic was tested using puttyj to connect to a SunOS station
+the remote shell is as secified above.
+
+
+
+
+Cheers,
+
+Saber

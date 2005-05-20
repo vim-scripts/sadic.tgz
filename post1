@@ -1,0 +1,6 @@
+use  HTTP::Request::Common qw(POST);
+use LWP::UserAgent;
+$ua = LWP::UserAgent->new;
+
+my $req = POST 'http://www.excite.co.jp/world/english/',
+              [ before => "xxx 

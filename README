@@ -1,0 +1,30 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=1286
+
+This is a handy utility to translate text from Japanese to English and vice versa. 
+It uses the excite.co.jp services to translate the text then displays the result in 
+the standard output.
+
+sadict was created to be integrated with vim and mutt , 
+If you add the following lines into your ~/.vimrc 
+
+vmap j :w! /tmp/.vim.msg.en<cr>:!sadic -j  < /tmp/.vim.msg.en<cr>
+vmap ,j :w! /tmp/.vim.msg.en<cr><esc>`>o<cr><esc>:r !sadic -j < /tmp/.vim.msg.en<cr>
+vmap e :w! /tmp/.vim.msg.jp<cr>:!sadic < /tmp/.msg.jp<cr>
+vmap ,e :w! /tmp/.vim.msg.jp<cr><esc>`>o<cr><esc>:r !sadic < /tmp/.vim.msg.jp<cr>
+
+Then you can visually select a text region (by pressing Shift-V then
+moving the cursor), then when you press "j" , the text will be translated 
+from English to Japanese.
+
+",j" translates the text from english to Japanese then appends the result (japanese text) 
+right after the visually selection region.
+
+The "e" and ",e" mappings do the same thing except that they translate text from
+Japanese to English.
+
+For Mutt , you can add the following into your .muttrc
+macro pager   j          "v\n| nkf -e | sadic -j | less \nq<left>"
+macro pager   e         "v\n| nkf -e | sadic  | less \nq<left>"
+
+Then , while viewing your e-mails , you can press "j" to translate from English
+to Japanese. and "e" to translate from Japanese to English.
